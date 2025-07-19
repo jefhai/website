@@ -35,16 +35,25 @@
 
     .contact {
       margin-top: 2rem;
-      font-size: 1.5rem;
     }
 
     .contact a {
-      color: #0077cc;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border: 2px solid #aaa;
+      border-radius: 50%;
+      color: #777;
       text-decoration: none;
+      font-size: 20px;
+      transition: background-color 0.2s, color 0.2s;
     }
 
     .contact a:hover {
-      color: #004f99;
+      background-color: #e0e0e0;
+      color: #333;
     }
 
     @media (max-width: 480px) {
@@ -54,9 +63,6 @@
       p {
         font-size: 1rem;
       }
-      .contact {
-        font-size: 1.25rem;
-      }
     }
   </style>
 </head>
@@ -64,13 +70,13 @@
   <div class="container">
     <h1>Jeff Haines</h1>
     <p>
-      Senior Software Engineer with experience in SaaS backend development, full-stack web development,
+      Senior Software Engineer with experience in Enterprise SaaS backend development, full-stack web development,
       and native mobile application development. Currently working at Oracle Hospitality Global Business Unit,
       developing the next generation of global distribution services for customers like Expedia and Booking.com.
     </p>
     <div class="contact">
       <a href="mailto:contact@jefhai.com" aria-label="Email Jeff Haines">
-        <i class="fas fa-envelope"></i> contact@jefhai.com
+        <i class="fas fa-envelope"></i>
       </a>
     </div>
   </div>
