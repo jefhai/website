@@ -37,6 +37,31 @@
       margin-top: 2rem;
     }
 
+    .tools {
+      margin-top: 3rem;
+      text-align: left;
+    }
+
+    .tools h2 {
+      margin: 0 0 0.35rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #727a76;
+    }
+
+    .tools-intro {
+      margin: 0 0 1rem;
+      color: #555d59;
+      font-size: 0.95rem;
+    }
+
+    .tools-list {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+    }
+
     .contact a {
       display: inline-flex;
       align-items: center;
@@ -57,12 +82,17 @@
     }
 
     @media (max-width: 480px) {
+      body {
+        padding: 1.25rem;
+      }
+
       h1 {
         font-size: 1.75rem;
       }
       p {
         font-size: 1rem;
       }
+
     }
   </style>
 </head>
@@ -73,6 +103,11 @@
       Senior Software Engineer with 10+ years of experience in Enterprise SaaS backend development, full-stack development,
       and native mobile application development. Currently working at Oracle.
     </p>
+    <section class="tools" aria-labelledby="tools-heading">
+      <h2 id="tools-heading">Tools</h2>
+      <p class="tools-intro">Small, focused utilities built for everyday work.</p>
+      <div class="tools-list" data-module-cards="scratchpad"></div>
+    </section>
     <div class="contact">
       <a href="mailto:contact@jefhai.com" aria-label="Email Jeffrey Haines">
         <i class="fas fa-envelope"></i>
@@ -85,5 +120,6 @@
       </a>
     </div>
   </div>
+  <script type="module" src="./modules/load-cards.js"></script>
 </body>
 </html>
