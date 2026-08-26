@@ -1,0 +1,83 @@
+name: Deploy website to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout website and modules
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Stage static website routes
+        shell: bash
+        run: |
+          mkdir -p "${RUNNER_TEMP}/site"
+          rsync \
+            --archive \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='modules/scratchpad/' \
+            "${GITHUB_WORKSPACE}/" \
+            "${RUNNER_TEMP}/site/"
+
+          mkdir -p "${RUNNER_TEMP}/site/modules/scratchpad"
+          cp -a \
+            "${GITHUB_WORKSPACE}/modules/scratchpad/site" \
+            "${RUNNER_TEMP}/site/modules/scratchpad/"
+
+          mkdir -p "${RUNNER_TEMP}/site/scratchpad"
+          cp -a \
+            "${GITHUB_WORKSPACE}/modules/scratchpad/." \
+            "${RUNNER_TEMP}/site/scratchpad/"
+
+      - name: Archive static website
+        shell: bash
+        run: |
+          tar \
+            --dereference \
+            --hard-dereference \
+            --directory "${RUNNER_TEMP}/site" \
+            --exclude=.git \
+            --exclude=.github \
+            --exclude=".[^/]*" \
+            -cvf "${RUNNER_TEMP}/artifact.tar" \
+            .
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
