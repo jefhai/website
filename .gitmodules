@@ -1,3 +1,6 @@
 [submodule "scratchpad"]
 	path = modules/scratchpad
 	url = https://github.com/jefhai/scratchpad.git
+[submodule "cellpad"]
+	path = modules/cellpad
+	url = https://github.com/jefhai/cellpad.git
