@@ -46,8 +46,14 @@ jobs:
             "${RUNNER_TEMP}/site/modules/scratchpad/"
 
           mkdir -p "${RUNNER_TEMP}/site/scratchpad"
-          cp -a \
-            "${GITHUB_WORKSPACE}/modules/scratchpad/." \
+          rsync \
+            --archive \
+            --exclude='.git' \
+            --exclude='.github/' \
+            --exclude='desktop/' \
+            --exclude='tests/' \
+            --exclude='scripts/' \
+            "${GITHUB_WORKSPACE}/modules/scratchpad/" \
             "${RUNNER_TEMP}/site/scratchpad/"
 
       - name: Archive static website
